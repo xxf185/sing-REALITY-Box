@@ -73,7 +73,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			current_server_name=$(jq -r '.inbounds[0].tls.server_name' /root/reality.json)
 
 			# Ask for server name (sni)
-			read -p "Enter server name/SNI (Current value is $current_server_name): " server_name
+			read -p "输入server name/SNI (Current value is $current_server_name): " server_name
 			server_name=${server_name:-$current_server_name}
 
 			# Modify reality.json with new settings
@@ -84,7 +84,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			systemctl restart sing-box
 			echo ""
 			echo ""
-			echo "New Link:"
+			echo "新链接:"
 			echo ""
 			echo ""
 			# Get current listen port
