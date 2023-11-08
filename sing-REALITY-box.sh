@@ -12,7 +12,7 @@ print_with_delay() {
 }
 
 # Introduction animation
-print_with_delay "sing-REALITY-box by DEATHLINE | @NamelesGhoul" 0.1
+print_with_delay "sing-REALITY-box 一键安装脚本" 0.1
 echo ""
 echo ""
 
@@ -37,20 +37,20 @@ fi
 # Check if reality.json, sing-box, and sing-box.service already exist
 if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.key.b64" ] && [ -f "/etc/systemd/system/sing-box.service" ]; then
 
-    echo "Reality files already exist."
+    echo "检测脚本已经安装"
     echo ""
-    echo "Please choose an option:"
+    echo "请选择:"
     echo ""
-    echo "1. Reinstall"
-    echo "2. Modify"
-    echo "3. Show Current Link"
-    echo "4. Uninstall"
+    echo "1. 重新安装l"
+    echo "2. 修改配置"
+    echo "3. 查看链接"
+    echo "4. 卸载脚本"
     echo ""
-    read -p "Enter your choice (1-4): " choice
+    read -p "选择 (1-4): " choice
 
     case $choice in
         1)
-	            	echo "Reinstalling..."
+	            	echo "重新安装"
 	            	# Uninstall previous installation
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -61,12 +61,12 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	# Proceed with installation
 	            	;;
         2)
-            		echo "Modifying..."
+            		echo "修改配置"
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
 			# Ask for listen port
-			read -p "Enter desired listen port (Current port is $current_listen_port): " listen_port
+			read -p "输入监听端口(Current port is $current_listen_port): " listen_port
 			listen_port=${listen_port:-$current_listen_port}
 
 			# Get current server name
@@ -144,7 +144,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
 			;;	
         4)
-	            	echo "Uninstalling..."
+	            	echo "正在卸载"
 	            	# Stop and disable sing-box service
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -154,11 +154,11 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 			rm /root/public.key.b64
-		    	echo "DONE!"
+		    	echo "卸载完成"
 	            	exit 0
 	            	;;
 	        	*)
-	            	echo "Invalid choice. Exiting."
+	            	echo "选择错误。退出"
 	            	exit 1
 	            	;;
 	    esac
@@ -209,9 +209,9 @@ chmod +x /root/sing-box
 
 
 # Generate key pair
-echo "正在生成密匙对..."
+echo "正在生成密匙..."
 key_pair=$(/root/sing-box generate reality-keypair)
-echo "密匙对生成完成."
+echo "密匙生成完成."
 echo
 
 # Extract private key and public key
@@ -230,7 +230,7 @@ read -p "输入监听端口 (默认: 443): " listen_port
 listen_port=${listen_port:-443}
 echo ""
 # Ask for server name (sni)
-read -p "输入服务器名称/SNI (默认: telewebion.com): " server_name
+read -p "输入server/SNI (默认: telewebion.com): " server_name
 server_name=${server_name:-telewebion.com}
 
 # Retrieve the server IP address
