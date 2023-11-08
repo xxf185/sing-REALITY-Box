@@ -29,7 +29,7 @@ if ! command -v jq &> /dev/null; then
     elif [ -n "$(command -v dnf)" ]; then
         dnf install -y jq
     else
-        echo "Cannot install jq. Please install jq manually and rerun the script."
+        echo "无法安装 jq. 请手动安装 jq 并重新运行script."
         exit 1
     fi
 fi
@@ -167,7 +167,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 # Fetch the latest (including pre-releases) release version number from GitHub API
 latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
-echo "Latest version: $latest_version"
+echo "sing-box内核最新版本: $latest_version"
 
 # Detect server architecture
 arch=$(uname -m)
@@ -209,9 +209,9 @@ chmod +x /root/sing-box
 
 
 # Generate key pair
-echo "Generating key pair..."
+echo "正在生成密匙对..."
 key_pair=$(/root/sing-box generate reality-keypair)
-echo "Key pair generation complete."
+echo "密匙对生成完成."
 echo
 
 # Extract private key and public key
@@ -226,11 +226,11 @@ uuid=$(/root/sing-box generate uuid)
 short_id=$(/root/sing-box generate rand --hex 8)
 
 # Ask for listen port
-read -p "Enter desired listen port (default: 443): " listen_port
+read -p "输入监听端口 (默认: 443): " listen_port
 listen_port=${listen_port:-443}
 echo ""
 # Ask for server name (sni)
-read -p "Enter server name/SNI (default: telewebion.com): " server_name
+read -p "输入服务器名称/SNI (默认: telewebion.com): " server_name
 server_name=${server_name:-telewebion.com}
 
 # Retrieve the server IP address
@@ -306,7 +306,7 @@ EOF
 
 # Check configuration and start the service
 if /root/sing-box check -c /root/reality.json; then
-    echo "Configuration checked successfully. Starting sing-box service..."
+    echo "配置完成。正在启动sing-box服务"
     systemctl daemon-reload
     systemctl enable sing-box > /dev/null 2>&1
     systemctl start sing-box
@@ -326,13 +326,13 @@ if /root/sing-box check -c /root/reality.json; then
     echo "UUID: $uuid"
     echo ""
     echo ""
-    echo "Here is the link for v2rayN and v2rayNG :"
+    echo "v2rayN通用链接:"
     echo ""
     echo ""
     echo "$server_link"
     echo ""
     echo ""
 else
-    echo "Error in configuration. Aborting."
+    echo "配置错误"
 fi
 
