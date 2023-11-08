@@ -41,7 +41,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     echo ""
     echo "请选择:"
     echo ""
-    echo "1. 重新安装l"
+    echo "1. 重新安装"
     echo "2. 修改配置"
     echo "3. 查看链接"
     echo "4. 卸载脚本"
