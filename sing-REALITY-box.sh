@@ -41,10 +41,10 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     echo ""
     echo "Please choose an option:"
     echo ""
-    echo "1. 重新安装"
-    echo "2. 修改配置"
-    echo "3. 查看链接"
-    echo "4. 卸载"
+    echo "1. Reinstall"
+    echo "2. Modify"
+    echo "3. Show Current Link"
+    echo "4. Uninstall"
     echo ""
     read -p "Enter your choice (1-4): " choice
 
@@ -165,7 +165,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	fi
 
 # Fetch the latest (including pre-releases) release version number from GitHub API
-latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
+latest_version_tag=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
 echo "Latest version: $latest_version"
 
@@ -190,7 +190,7 @@ esac
 package_name="sing-box-${latest_version}-linux-${arch}"
 
 # Prepare download URL
-url="https://github.com/xxf185/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
+url="https://github.com/SagerNet/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
 
 # Download the latest release package (.tar.gz) from GitHub
 curl -sLo "/root/${package_name}.tar.gz" "$url"
