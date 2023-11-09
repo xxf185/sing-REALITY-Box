@@ -51,12 +51,12 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     read -p "选择 (1-4): " choice
 
     case $choice in
-        1)
-	            	echo "重新安装"
+        1)         echo ""
+                   echo "重新安装"
 	            	# Uninstall previous installation
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
-	           	rm /etc/systemd/system/sing-box.service
+	           	    rm /etc/systemd/system/sing-box.service
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 	
