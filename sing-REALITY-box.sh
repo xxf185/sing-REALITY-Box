@@ -328,7 +328,7 @@ if /root/sing-box check -c /root/reality.json; then
     echo "UUID: $uuid"
     echo ""
     echo ""
-    echo "v2rayN通用链接:"
+    echo "生成配置:"
     echo ""
     echo ""
     echo "$server_link"
