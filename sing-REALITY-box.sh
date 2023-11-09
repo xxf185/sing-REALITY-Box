@@ -13,7 +13,6 @@ print_with_delay() {
 
 # Introduction animation
 echo ""
-echo ""
 print_with_delay "sing-REALITY-box 一键安装脚本" 0.1
 echo ""
 echo ""
@@ -170,10 +169,12 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
 echo "sing-box内核最新版本: $latest_version"
+echo ""
 
 # Detect server architecture
 arch=$(uname -m)
 echo "cpu架构: $arch"
+echo ""
 
 # Map architecture names
 case ${arch} in
