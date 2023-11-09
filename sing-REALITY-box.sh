@@ -171,7 +171,7 @@ echo "sing-box内核最新版本: $latest_version"
 
 # Detect server architecture
 arch=$(uname -m)
-echo "Architecture: $arch"
+echo "cpu架构: $arch"
 
 # Map architecture names
 case ${arch} in
