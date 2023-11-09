@@ -311,6 +311,7 @@ EOF
 
 # Check configuration and start the service
 if /root/sing-box check -c /root/reality.json; then
+    echo ""
     echo "配置完成。正在启动sing-box服务"
     systemctl daemon-reload
     systemctl enable sing-box > /dev/null 2>&1
