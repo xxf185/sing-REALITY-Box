@@ -169,6 +169,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 # Fetch the latest (including pre-releases) release version number from GitHub API
 latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
+echo ""
 echo "sing-box内核最新版本: $latest_version"
 echo ""
 
