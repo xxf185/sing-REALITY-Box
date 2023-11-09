@@ -16,9 +16,6 @@ echo ""
 echo ""
 echo "--------sing-REALITY-box 一键安装脚本------" 
 echo ""
-echo ""
-
-
 # Check if jq is installed, and install it if not
 if ! command -v jq &> /dev/null; then
     echo "jq is not installed. Installing..."
