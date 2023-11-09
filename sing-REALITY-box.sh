@@ -64,6 +64,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	;;
         2)
             		echo "修改配置"
+                    echo ""
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
