@@ -13,7 +13,7 @@ print_with_delay() {
 
 # Introduction animation
 echo ""
-print_with_delay "sing-REALITY-box 一键安装脚本" 0.1
+echo "sing-REALITY-box 一键安装脚本" 
 echo ""
 echo ""
 
