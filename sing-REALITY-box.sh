@@ -71,9 +71,11 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			# Ask for listen port
 			read -p "输入监听端口(Current port is $current_listen_port): " listen_port
 			listen_port=${listen_port:-$current_listen_port}
+            echo ""
 
 			# Get current server name
 			current_server_name=$(jq -r '.inbounds[0].tls.server_name' /root/reality.json)
+            echo ""
 
 			# Ask for server name (sni)
 			read -p "输入server name/SNI (Current value is $current_server_name): " server_name
