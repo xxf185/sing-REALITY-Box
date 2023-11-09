@@ -149,7 +149,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
 			;;	
         4)
-	            	echo "正在卸载"
+	            	echo ""
 	            	# Stop and disable sing-box service
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
