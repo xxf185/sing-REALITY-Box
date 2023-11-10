@@ -18,7 +18,7 @@ echo "--------sing-REALITY-box 一键安装脚本------"
 echo ""
 # Check if jq is installed, and install it if not
 if ! command -v jq &> /dev/null; then
-    echo "jq没有安装.准备安装jq"
+    echo "安装jq"
     if [ -n "$(command -v apt)" ]; then
         apt update > /dev/null 2>&1
         apt install -y jq > /dev/null 2>&1
