@@ -30,7 +30,7 @@ if ! command -v jq &> /dev/null; then
     elif [ -n "$(command -v dnf)" ]; then
         dnf install -y jq
     else
-        echo "无法安装 jq. 请手动安装 jq 并重新运行script."
+        echo "jq安装失败."
         exit 1
     fi
 fi
