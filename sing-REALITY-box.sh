@@ -37,7 +37,7 @@ fi
 
 # Check if reality.json, sing-box, and sing-box.service already exist
 if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.key.b64" ] && [ -f "/etc/systemd/system/sing-box.service" ]; then
-
+    echo ""
     echo "检测脚本已经安装"
     echo ""
     echo "请选择:"
