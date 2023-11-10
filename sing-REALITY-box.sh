@@ -86,7 +86,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			systemctl restart sing-box
 			echo ""
 			echo ""
-			echo "新配置:"
+			echo "------链接------"
 			echo ""
 			echo ""
 			# Get current listen port
@@ -314,7 +314,7 @@ EOF
 # Check configuration and start the service
 if /root/sing-box check -c /root/reality.json; then
     echo ""
-    echo "配置完成。正在启动sing-box服务"
+    echo "配置完成.正在启动sing-box服务"
     systemctl daemon-reload
     systemctl enable sing-box > /dev/null 2>&1
     systemctl start sing-box
@@ -334,7 +334,7 @@ if /root/sing-box check -c /root/reality.json; then
     echo "UUID: $uuid"
     echo ""
     echo ""
-    echo "生成配置:"
+    echo "------链接------"
     echo ""
     echo ""
     echo "$server_link"
