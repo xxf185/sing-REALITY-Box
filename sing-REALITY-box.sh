@@ -158,7 +158,6 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 			rm /root/public.key.b64
-                        rm /usr/bin/jq
 		    	echo "卸载完成"
 	            	exit 0
 	            	;;
