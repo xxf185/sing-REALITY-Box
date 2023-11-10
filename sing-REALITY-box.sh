@@ -160,7 +160,8 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	exit 0
 	            	;;
 	        	*)
-	            	echo "选择错误。退出"
+                   echo ""
+	            	echo "选择错误.退出"
 	            	exit 1
 	            	;;
 	    esac
