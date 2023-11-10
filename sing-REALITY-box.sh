@@ -341,6 +341,6 @@ if /root/sing-box check -c /root/reality.json; then
     echo ""
     echo ""
 else
-    echo "配置错误"
+    echo "错误"
 fi
 
