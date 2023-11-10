@@ -116,8 +116,8 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
             		;;
 	3)
+            echo ""
 			echo "链接"
-			
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
