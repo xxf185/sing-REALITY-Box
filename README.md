@@ -1,7 +1,7 @@
 
 
 ```
-wget https://github.com/xxf185/jq/releases/latest/download/jq-linux-amd64
+wget https://github.com/xxf185/jq/releases/download/jq-1.7/jq-linux-amd64
 ```
 
 ```
