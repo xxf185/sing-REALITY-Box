@@ -40,7 +40,6 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     echo ""
     echo "检测脚本已经安装"
     echo ""
-    echo ""
     echo "1. 重新安装"
     echo "2. 修改配置"
     echo "3. 查看配置"
