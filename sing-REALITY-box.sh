@@ -216,10 +216,10 @@ chmod +x /root/sing-box
 
 
 # Generate key pair
-echo "正在生成密匙..."
+echo "正在获取密匙..."
 key_pair=$(/root/sing-box generate reality-keypair)
 echo ""
-echo "密匙生成完成."
+echo "获取密匙完成."
 echo
 
 # Extract private key and public key
