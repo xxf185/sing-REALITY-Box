@@ -108,7 +108,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			server_ip=$(curl -s https://api.ipify.org)
 			
 			# Generate the link
-			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
+			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 			
 			echo "$server_link"
 			echo ""
@@ -116,7 +116,8 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
             		;;
 	3)
-			echo  "----------链接----------"
+                        echo ""	
+                        echo  "----------链接----------"
 			
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
@@ -137,7 +138,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			server_ip=$(curl -s https://api.ipify.org)
 			
 			# Generate the link
-			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
+			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 			echo ""
 			echo ""
 			echo "$server_link"
@@ -170,11 +171,12 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
 echo "sing-box内核最新版本: $latest_version"
+echo
 
 # Detect server architecture
 arch=$(uname -m)
 echo "CPU架构: $arch"
-
+echo
 # Map architecture names
 case ${arch} in
     x86_64)
@@ -212,6 +214,7 @@ chmod +x /root/sing-box
 
 # Generate key pair
 echo "正在获取密匙"
+echo
 key_pair=$(/root/sing-box generate reality-keypair)
 echo "获取密匙完成"
 echo
@@ -316,7 +319,7 @@ if /root/sing-box check -c /root/reality.json; then
 
 # Generate the link
 
-    server_link="vless://$uuid@$server_ip:$listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
+    server_link="vless://$uuid@$server_ip:$listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 
     # Print the server details
     echo
