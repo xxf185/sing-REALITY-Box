@@ -52,7 +52,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 
     case $choice in
         1)
-	            	echo "Reinstalling..."
+	            	echo ""
 	            	# Uninstall previous installation
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -63,19 +63,19 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	# Proceed with installation
 	            	;;
         2)
-            		echo "Modifying..."
+            		echo ""
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
 			# Ask for listen port
-			read -p "Enter desired listen port (Current port is $current_listen_port): " listen_port
+			read -p "输入listen port (Current port is $current_listen_port): " listen_port
 			listen_port=${listen_port:-$current_listen_port}
 
 			# Get current server name
 			current_server_name=$(jq -r '.inbounds[0].tls.server_name' /root/reality.json)
 
 			# Ask for server name (sni)
-			read -p "Enter server name/SNI (Current value is $current_server_name): " server_name
+			read -p "输入server name/SNI (Current value is $current_server_name): " server_name
 			server_name=${server_name:-$current_server_name}
 
 			# Modify reality.json with new settings
@@ -86,7 +86,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			systemctl restart sing-box
 			echo ""
 			echo ""
-			echo "New Link:"
+			echo "----------链接----------"
 			echo ""
 			echo ""
 			# Get current listen port
@@ -116,7 +116,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
             		;;
 	3)
-			echo "Showing current link..."
+			echo  "----------链接----------"
 			
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
