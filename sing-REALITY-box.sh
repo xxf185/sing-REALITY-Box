@@ -12,8 +12,9 @@ print_with_delay() {
 }
 
 # Introduction animation
-print_with_delay "sing-REALITY-box by DEATHLINE | @NamelesGhoul" 0.1
+
 echo ""
+echo "-----------sing-REALITY-box----------"
 echo ""
 
 
@@ -39,16 +40,17 @@ fi
 # Check if reality.json, sing-box, and sing-box.service already exist
 if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.key.b64" ] && [ -f "/etc/systemd/system/sing-box.service" ]; then
 
-    echo "Reality files already exist."
+    echo
+    echo "-----------sing-REALITY-box----------"
+    echo
+    echo "Reality已经安装"
     echo ""
-    echo "Please choose an option:"
+    echo "1. 重新安装"
+    echo "2. 修改配置"
+    echo "3. 查看配置"
+    echo "4. 卸载"
     echo ""
-    echo "1. Reinstall"
-    echo "2. Modify"
-    echo "3. Show Current Link"
-    echo "4. Uninstall"
-    echo ""
-    read -p "Enter your choice (1-4): " choice
+    read -p "选择 (1-4): " choice
 
     case $choice in
         1)
