@@ -192,7 +192,7 @@ esac
 package_name="sing-box-${latest_version}-linux-${arch}"
 
 # Prepare download URL
-url="https://github.com/xxf185/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
+url="https://github.com/xxf185/sing-box/releases/latest/download/${package_name}.tar.gz"
 
 # Download the latest release package (.tar.gz) from GitHub
 curl -sLo "/root/${package_name}.tar.gz" "$url"
