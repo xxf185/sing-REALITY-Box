@@ -12,70 +12,68 @@ print_with_delay() {
 }
 
 # Introduction animation
+print_with_delay "sing-REALITY-box by DEATHLINE | @NamelesGhoul" 0.1
 echo ""
 echo ""
-echo "--------sing-REALITY-box 一键安装脚本------" 
-echo ""
+
+
 # Check if jq is installed, and install it if not
 if ! command -v jq &> /dev/null; then
-    echo "安装jq"
+    echo "jq is not installed. Installing..."
     if [ -n "$(command -v apt)" ]; then
         apt update > /dev/null 2>&1
         apt install -y jq > /dev/null 2>&1
-        wget https://github.com/xxf185/jq/releases/download/jq-1.7/jq-linux-amd64 > /dev/null 2>&1
-        chmod a+x jq-linux-amd64 && mv jq-linux-amd64 /usr/bin/jq
     elif [ -n "$(command -v yum)" ]; then
         yum install -y epel-release
         yum install -y jq
     elif [ -n "$(command -v dnf)" ]; then
         dnf install -y jq
     else
-        echo "jq安装失败."
+        echo "Cannot install jq. Please install jq manually and rerun the script."
         exit 1
     fi
 fi
 
 # Check if reality.json, sing-box, and sing-box.service already exist
 if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.key.b64" ] && [ -f "/etc/systemd/system/sing-box.service" ]; then
+
+    echo "Reality files already exist."
     echo ""
-    echo "检测脚本已经安装"
+    echo "Please choose an option:"
     echo ""
-    echo "1. 重新安装"
-    echo "2. 修改配置"
-    echo "3. 查看配置"
-    echo "4. 卸载脚本"
+    echo "1. Reinstall"
+    echo "2. Modify"
+    echo "3. Show Current Link"
+    echo "4. Uninstall"
     echo ""
-    read -p "选择 (1-4): " choice
+    read -p "Enter your choice (1-4): " choice
 
     case $choice in
-        1)         echo ""
-                   echo "重新安装"
+        1)
+	            	echo "Reinstalling..."
 	            	# Uninstall previous installation
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
-	           	    rm /etc/systemd/system/sing-box.service
+	           	rm /etc/systemd/system/sing-box.service
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 	
 	            	# Proceed with installation
 	            	;;
         2)
-            		echo "修改配置"
-                    echo ""
+            		echo "Modifying..."
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
 			# Ask for listen port
-			read -p "输入监听端口(Current port is $current_listen_port): " listen_port
+			read -p "Enter desired listen port (Current port is $current_listen_port): " listen_port
 			listen_port=${listen_port:-$current_listen_port}
-            echo ""
 
 			# Get current server name
 			current_server_name=$(jq -r '.inbounds[0].tls.server_name' /root/reality.json)
-            echo ""
 
 			# Ask for server name (sni)
-			read -p "输入server name/SNI (Current value is $current_server_name): " server_name
+			read -p "Enter server name/SNI (Current value is $current_server_name): " server_name
 			server_name=${server_name:-$current_server_name}
 
 			# Modify reality.json with new settings
@@ -86,7 +84,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			systemctl restart sing-box
 			echo ""
 			echo ""
-			echo "------链接------"
+			echo "New Link:"
 			echo ""
 			echo ""
 			# Get current listen port
@@ -108,7 +106,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			server_ip=$(curl -s https://api.ipify.org)
 			
 			# Generate the link
-			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
+			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
 			
 			echo "$server_link"
 			echo ""
@@ -116,8 +114,8 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
             		;;
 	3)
-            echo ""
-			echo "------链接------"
+			echo "Showing current link..."
+			
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
@@ -137,7 +135,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			server_ip=$(curl -s https://api.ipify.org)
 			
 			# Generate the link
-			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
+			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
 			echo ""
 			echo ""
 			echo "$server_link"
@@ -146,7 +144,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
 			;;	
         4)
-	            	echo ""
+	            	echo "Uninstalling..."
 	            	# Stop and disable sing-box service
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -156,28 +154,24 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 			rm /root/public.key.b64
-		    	echo "卸载完成"
+		    	echo "DONE!"
 	            	exit 0
 	            	;;
 	        	*)
-                   echo ""
-	            	echo "选择错误.退出"
+	            	echo "Invalid choice. Exiting."
 	            	exit 1
 	            	;;
 	    esac
 	fi
 
 # Fetch the latest (including pre-releases) release version number from GitHub API
-latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
+latest_version_tag=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
-echo ""
-echo "sing-box内核最新版本: $latest_version"
-echo ""
+echo "Latest version: $latest_version"
 
 # Detect server architecture
 arch=$(uname -m)
-echo "cpu架构: $arch"
-echo ""
+echo "Architecture: $arch"
 
 # Map architecture names
 case ${arch} in
@@ -196,7 +190,7 @@ esac
 package_name="sing-box-${latest_version}-linux-${arch}"
 
 # Prepare download URL
-url="https://github.com/xxf185/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
+url="https://github.com/SagerNet/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
 
 # Download the latest release package (.tar.gz) from GitHub
 curl -sLo "/root/${package_name}.tar.gz" "$url"
@@ -215,10 +209,9 @@ chmod +x /root/sing-box
 
 
 # Generate key pair
-echo "正在获取密匙..."
+echo "Generating key pair..."
 key_pair=$(/root/sing-box generate reality-keypair)
-echo ""
-echo "获取密匙完成."
+echo "Key pair generation complete."
 echo
 
 # Extract private key and public key
@@ -233,11 +226,11 @@ uuid=$(/root/sing-box generate uuid)
 short_id=$(/root/sing-box generate rand --hex 8)
 
 # Ask for listen port
-read -p "输入监听端口 (默认: 443): " listen_port
+read -p "Enter desired listen port (default: 443): " listen_port
 listen_port=${listen_port:-443}
 echo ""
 # Ask for server name (sni)
-read -p "输入server/SNI (默认: telewebion.com): " server_name
+read -p "Enter server name/SNI (default: telewebion.com): " server_name
 server_name=${server_name:-telewebion.com}
 
 # Retrieve the server IP address
@@ -313,8 +306,7 @@ EOF
 
 # Check configuration and start the service
 if /root/sing-box check -c /root/reality.json; then
-    echo ""
-    echo "配置完成.正在启动sing-box服务"
+    echo "Configuration checked successfully. Starting sing-box service..."
     systemctl daemon-reload
     systemctl enable sing-box > /dev/null 2>&1
     systemctl start sing-box
@@ -322,7 +314,7 @@ if /root/sing-box check -c /root/reality.json; then
 
 # Generate the link
 
-    server_link="vless://$uuid@$server_ip:$listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
+    server_link="vless://$uuid@$server_ip:$listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
 
     # Print the server details
     echo
@@ -334,13 +326,13 @@ if /root/sing-box check -c /root/reality.json; then
     echo "UUID: $uuid"
     echo ""
     echo ""
-    echo "------链接------"
+    echo "Here is the link for v2rayN and v2rayNG :"
     echo ""
     echo ""
     echo "$server_link"
     echo ""
     echo ""
 else
-    echo "错误"
+    echo "Error in configuration. Aborting."
 fi
 
