@@ -236,7 +236,7 @@ read -p "输入listen port (默认: 443): " listen_port
 listen_port=${listen_port:-443}
 echo ""
 # Ask for server name (sni)
-read -p "输入server name/SNI (default: telewebion.com): " server_name
+read -p "输入server name/SNI (默认: telewebion.com): " server_name
 server_name=${server_name:-telewebion.com}
 
 # Retrieve the server IP address
