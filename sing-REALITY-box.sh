@@ -41,8 +41,6 @@ fi
 if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.key.b64" ] && [ -f "/etc/systemd/system/sing-box.service" ]; then
 
     echo
-    echo "-----------sing-REALITY-box----------"
-    echo
     echo "Reality已经安装"
     echo ""
     echo "1. 重新安装"
@@ -148,7 +146,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
 			;;	
         4)
-	            	echo "Uninstalling..."
+	            	echo ""
 	            	# Stop and disable sing-box service
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -158,7 +156,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 			rm /root/public.key.b64
-		    	echo "DONE!"
+		    	echo "卸载完成"
 	            	exit 0
 	            	;;
 	        	*)
