@@ -67,7 +67,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
-			# Ask for listen port
+		        # Ask for listen port
 			read -p "输入listen port (Current port is $current_listen_port): " listen_port
 			listen_port=${listen_port:-$current_listen_port}
 
@@ -75,6 +75,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			current_server_name=$(jq -r '.inbounds[0].tls.server_name' /root/reality.json)
 
 			# Ask for server name (sni)
+            		echo ""
 			read -p "输入server name/SNI (Current value is $current_server_name): " server_name
 			server_name=${server_name:-$current_server_name}
 
@@ -311,6 +312,7 @@ EOF
 
 # Check configuration and start the service
 if /root/sing-box check -c /root/reality.json; then
+    echo
     echo "配置成功.启动sing-box服务"
     systemctl daemon-reload
     systemctl enable sing-box > /dev/null 2>&1
