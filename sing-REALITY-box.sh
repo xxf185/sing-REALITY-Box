@@ -46,7 +46,8 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     echo "1. 重新安装"
     echo "2. 修改配置"
     echo "3. 查看配置"
-    echo "4. 卸载"
+    echo "4. 升级core
+    echo "5. 卸载"
     echo ""
     read -p "选择 (1-4): " choice
 
@@ -148,6 +149,9 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
 			;;	
         4)
+        
+        5)        
+        
 	            	echo ""
 	            	# Stop and disable sing-box service
 	            	systemctl stop sing-box
