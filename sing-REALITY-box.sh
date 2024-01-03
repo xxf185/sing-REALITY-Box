@@ -149,6 +149,14 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
 			;;	
         4)
+        curl -sLo "/root/${package_name}.tar.gz" "$url" then
+        tar -xzf "/root/${package_name}.tar.gz" -C /root;then
+        mv "/root/${package_name}/sing-box" /root/
+        rm -r "/root/${package_name}.tar.gz" "/root/${package_name}";then
+        chown root:root /root/sing-box
+        chmod +x /root/sing-box
+            
+
         
         5)        
         
