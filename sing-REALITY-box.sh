@@ -47,7 +47,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     echo "2. 修改配置"
     echo "3. 查看配置"
     echo "4. 卸载"
-    echo ""
+    echo "6".升级core
     read -p "选择 (1-4): " choice
 
     case $choice in
@@ -165,7 +165,28 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	echo "Invalid choice. Exiting."
 	            	exit 1
 	            	;;
-	    esac
+      6)
+	      
+	               esac# Prepare package names
+                       package_name="sing-box-${latest_version}-linux-${arch}"
+
+                       # Prepare download URL
+                       url="https://github.com/xxf185/sing-box/releases/latest/download/${package_name}.tar.gz"
+
+                       # Download the latest release package (.tar.gz) from GitHub
+                       curl -sLo "/root/${package_name}.tar.gz" "$url"
+
+
+                       # Extract the package and move the binary to /root
+                        tar -xzf "/root/${package_name}.tar.gz" -C /root
+                        mv "/root/${package_name}/sing-box" /root/
+
+                       # Cleanup the package
+                       rm -r "/root/${package_name}.tar.gz" "/root/${package_name}"
+
+                       # Set the permissions
+                       chown root:root /root/sing-box
+                       chmod +x /root/sing-box
 	fi
 
 # Fetch the latest (including pre-releases) release version number from GitHub API
