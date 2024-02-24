@@ -24,7 +24,7 @@ if ! command -v jq &> /dev/null; then
     if [ -n "$(command -v apt)" ]; then
         apt update > /dev/null 2>&1
         apt install -y jq > /dev/null 2>&1
-        wget https://github.com/SagerNet/jq/releases/latest/download/jq-linux-amd64 > /dev/null 2>&1
+        wget https://github.com/xxf185/jq/releases/latest/download/jq-linux-amd64 > /dev/null 2>&1
         chmod a+x jq-linux-amd64 && mv jq-linux-amd64 /usr/bin/jq
     elif [ -n "$(command -v yum)" ]; then
         yum install -y epel-release
@@ -169,7 +169,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	fi
 
 # Fetch the latest (including pre-releases) release version number from GitHub API
-latest_version_tag=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
+latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
 echo "sing-box内核最新版本: $latest_version"
 echo
@@ -195,7 +195,7 @@ esac
 package_name="sing-box-${latest_version}-linux-${arch}"
 
 # Prepare download URL
-url="https://github.com/SagerNet/sing-box/releases/latest/download/${package_name}.tar.gz"
+url="https://github.com/xxf185/sing-box/releases/latest/download/${package_name}.tar.gz"
 
 # Download the latest release package (.tar.gz) from GitHub
 curl -sLo "/root/${package_name}.tar.gz" "$url"
