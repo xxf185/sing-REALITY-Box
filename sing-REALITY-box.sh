@@ -236,8 +236,8 @@ read -p "输入listen port (默认: 443): " listen_port
 listen_port=${listen_port:-443}
 echo ""
 # Ask for server name (sni)
-read -p "输入server name/SNI (default: one-piece.com): " server_name
-server_name=${server_name:-one-piece.com}
+read -p "输入server name/SNI (default: dash.cloudflare.com): " server_name
+server_name=${server_name:-dash.cloudflare.com}
 
 # Retrieve the server IP address
 server_ip=$(curl -s https://api.ipify.org)
