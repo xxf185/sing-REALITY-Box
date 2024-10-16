@@ -186,9 +186,6 @@ case ${arch} in
     aarch64)
         arch="arm64"
         ;;
-    armv7l)
-        arch="armv7"
-        ;;
 esac
 
 # Prepare package names
