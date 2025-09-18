@@ -32,7 +32,7 @@ if ! command -v jq &> /dev/null; then
     elif [ -n "$(command -v dnf)" ]; then
         dnf install -y jq
     else
-        echo "Cannot install jq. Please install jq manually and rerun the script."
+        echo "无法安装jq.请手动安装jq 后再次运行脚本."
         exit 1
     fi
 fi
