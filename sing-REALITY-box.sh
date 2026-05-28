@@ -169,7 +169,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	fi
 
 # Fetch the latest (including pre-releases) release version number from GitHub API
-latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
+latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sb-core/releases" | grep -Po '"tag_name": "\K.*?(?=")' | head -n 1)
 latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
 echo "sing-box内核最新版本: $latest_version"
 echo
@@ -192,7 +192,7 @@ esac
 package_name="sing-box-${latest_version}-linux-${arch}"
 
 # Prepare download URL
-url="https://github.com/xxf185/sing-box/releases/latest/download/${package_name}.tar.gz"
+url="https://github.com/xxf185/sb-core/releases/latest/download/${package_name}.tar.gz"
 
 # Download the latest release package (.tar.gz) from GitHub
 curl -sLo "/root/${package_name}.tar.gz" "$url"
