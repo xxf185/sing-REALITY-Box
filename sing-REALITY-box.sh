@@ -208,7 +208,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			;;
 
     5)
-	            	echo "Uninstalling..."
+	            	echo "卸载中..."
 	            	# Stop and disable sing-box service
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -218,18 +218,18 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	rm /root/reality.json
 	            	rm /root/sing-box
 			rm /root/public.key.b64
-		    	echo "DONE!"
+		    	echo "卸载完成!"
 	            	exit 0
 	            	;;
 	        	*)
-	            	echo "Invalid choice. Exiting."
+	            	echo "选择错误"
 	            	exit 1
 	            	;;
 	    esac
 	fi
 
 		echo ""
-  		echo "Please choose the version to install:"
+  		echo "请选择要安装的版本:"
   		echo ""
 		echo "1. 稳定版"
 		echo "2. Alpha"
