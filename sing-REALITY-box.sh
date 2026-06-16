@@ -84,6 +84,9 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			systemctl restart sing-box
 			echo ""
 			echo ""
+			echo "----------链接----------"
+			echo ""
+			echo ""
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
@@ -104,7 +107,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			if [ -z "$server_ip" ]; then server_ip=$(curl -s4 https://ifconfig.me); fi
 			
 			# Generate the link
-			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
+			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 			
 			echo "$server_link"
 			echo ""
@@ -112,7 +115,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			exit 0
             		;;
 	3)
-			echo "Showing current link..."
+			echo "----------链接----------"
 			
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
@@ -134,7 +137,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			if [ -z "$server_ip" ]; then server_ip=$(curl -s4 https://ifconfig.me); fi
 			
 			# Generate the link
-			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
+			server_link="vless://$uuid@$server_ip:$current_listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$current_server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 			echo ""
 			echo ""
 			echo "$server_link"
@@ -144,24 +147,24 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			;;
 		4)
 			echo ""
-   			echo "Switching Version..."
+   			echo "切换版本..."
 			echo ""
 			# Extract the current version
 			current_version_tag=$(/root/sing-box version | grep 'sing-box version' | awk '{print $3}')
 
 			# Fetch the latest stable and alpha version tags
-			latest_stable_version=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | jq -r '[.[] | select(.prerelease==false)][0].tag_name' 2>/dev/null)
+			latest_stable_version=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | jq -r '[.[] | select(.prerelease==false)][0].tag_name' 2>/dev/null)
 			if [ -z "$latest_stable_version" ] || [ "$latest_stable_version" == "null" ]; then latest_stable_version="v1.13.12"; fi
-			latest_alpha_version=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | jq -r '[.[] | select(.prerelease==true)][0].tag_name' 2>/dev/null)
+			latest_alpha_version=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | jq -r '[.[] | select(.prerelease==true)][0].tag_name' 2>/dev/null)
 			if [ -z "$latest_alpha_version" ] || [ "$latest_alpha_version" == "null" ]; then latest_alpha_version="v1.14.0-alpha.27"; fi
 
 			# Determine current version type (stable or alpha)
 			if [[ $current_version_tag == *"-alpha"* ]]; then
-				echo "Currently on Alpha. Switching to Stable..."
+				echo "目前在 Alpha. 切换到稳定版..."
 				echo ""
 				new_version_tag=$latest_stable_version
 			else
-				echo "Currently on Stable. Switching to Alpha..."
+				echo "目前使用的是稳定版。即将切换到 Alpha 版……"
 				echo ""
 				new_version_tag=$latest_alpha_version
 			fi
@@ -178,12 +181,12 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			esac
 
 			package_name="sing-box-${new_version_tag#v}-linux-${arch}"
-			url="https://github.com/SagerNet/sing-box/releases/download/${new_version_tag}/${package_name}.tar.gz"
+			url="https://github.com/xxf185/sing-box/releases/download/${new_version_tag}/${package_name}.tar.gz"
 
 			curl -sLo "/root/${package_name}.tar.gz" "$url"
 			tar -xzf "/root/${package_name}.tar.gz" -C /root
 			if [ $? -ne 0 ]; then
-				echo "Failed to extract the package. Aborting."
+				echo "提取软件包失败，中止操作。"
 				exit 1
 			fi
 			mv "/root/${package_name}/sing-box" /root/sing-box
@@ -199,7 +202,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			systemctl daemon-reload
 			systemctl start sing-box
 
-			echo "Version switched and service restarted with the new binary."
+			echo "版本已切换."
 			echo ""
 			exit 0
 			;;
@@ -228,34 +231,34 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 		echo ""
   		echo "Please choose the version to install:"
   		echo ""
-		echo "1. Stable"
+		echo "1. 稳定版"
 		echo "2. Alpha"
   		echo ""
-		read -p "Enter your choice (1-2, default: 1): " version_choice
+		read -p "选项: " version_choice
   		echo ""
 		version_choice=${version_choice:-1}
 
 		# Set the tag based on user choice
 		if [ "$version_choice" -eq 2 ]; then
-			echo "Installing Alpha version..."
+			echo "安装 Alpha 版本..."
    			echo ""
-			latest_version_tag=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | jq -r '[.[] | select(.prerelease==true)][0].tag_name' 2>/dev/null)
+			latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | jq -r '[.[] | select(.prerelease==true)][0].tag_name' 2>/dev/null)
 			if [ -z "$latest_version_tag" ] || [ "$latest_version_tag" == "null" ]; then latest_version_tag="v1.14.0-alpha.27"; fi
 		else
-			echo "Installing Stable version..."
+			echo "安装Stable 版本..."
    			echo ""
-			latest_version_tag=$(curl -s "https://api.github.com/repos/SagerNet/sing-box/releases" | jq -r '[.[] | select(.prerelease==false)][0].tag_name' 2>/dev/null)
-			if [ -z "$latest_version_tag" ] || [ "$latest_version_tag" == "null" ]; then latest_version_tag="v1.13.12"; fi
+			latest_version_tag=$(curl -s "https://api.github.com/repos/xxf185/sing-box/releases" | jq -r '[.[] | select(.prerelease==false)][0].tag_name' 2>/dev/null)
+			if [ -z "$latest_version_tag" ] || [ "$latest_version_tag" == "null" ]; then latest_version_tag="v1.13.13"; fi
 		fi
 
 		# No need to fetch the latest version tag again, it's already set based on user choice
 		latest_version=${latest_version_tag#v}  # Remove 'v' prefix from version number
-		echo "Latest version: $latest_version"
+		echo "最新版本: $latest_version"
   		echo ""
 
 		# Detect server architecture
 		arch=$(uname -m)
-		echo "Architecture: $arch"
+		echo "Arch: $arch"
   		echo ""
 
 		# Map architecture names
@@ -275,7 +278,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 package_name="sing-box-${latest_version}-linux-${arch}"
 
 # Prepare download URL
-url="https://github.com/SagerNet/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
+url="https://github.com/xxf185/sing-box/releases/download/${latest_version_tag}/${package_name}.tar.gz"
 
 # Download the latest release package (.tar.gz) from GitHub
 curl -sLo "/root/${package_name}.tar.gz" "$url"
@@ -284,7 +287,7 @@ curl -sLo "/root/${package_name}.tar.gz" "$url"
 # Extract the package and move the binary to /root
 tar -xzf "/root/${package_name}.tar.gz" -C /root
 if [ $? -ne 0 ]; then
-    echo "Failed to extract the package. Aborting."
+    echo "提取软件包失败"
     exit 1
 fi
 mv "/root/${package_name}/sing-box" /root/
@@ -298,10 +301,10 @@ chmod +x /root/sing-box
 
 
 # Generate key pair
-echo "Generating key pair..."
+echo "生成密钥..."
 echo ""
 key_pair=$(/root/sing-box generate reality-keypair)
-echo "Key pair generation complete."
+echo "密钥生成完成。"
 echo ""
 
 # Extract private key and public key
@@ -316,13 +319,13 @@ uuid=$(/root/sing-box generate uuid)
 short_id=$(/root/sing-box generate rand --hex 8)
 
 # Ask for listen port
-read -p "Enter desired listen port (default: 443): " listen_port
+read -p "请输入端口(default: 443): " listen_port
 listen_port=${listen_port:-443}
 echo ""
 # Ask for server name (sni)
-read -p "Enter server name/SNI (default: play.google.com): " server_name
+read -p "请输入 name/SNI (default: www.ebay.com): " server_name
 echo ""
-server_name=${server_name:-play.google.com}
+server_name=${server_name:-www.ebay.com}
 
 # Retrieve the server IP address
 server_ip=$(curl -s4 https://api.ipify.org)
@@ -411,7 +414,7 @@ EOF
 
 # Check configuration and start the service
 if /root/sing-box check -c /root/reality.json; then
-    echo "Configuration checked successfully. Starting sing-box service..."
+    echo "配置成功.正在启动 sing-box 服务..."
     systemctl daemon-reload
     systemctl enable sing-box > /dev/null 2>&1
     systemctl start sing-box
@@ -419,7 +422,7 @@ if /root/sing-box check -c /root/reality.json; then
 
 # Generate the link
 
-    server_link="vless://$uuid@$server_ip:$listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#SING-BOX-TCP"
+    server_link="vless://$uuid@$server_ip:$listen_port?encryption=none&flow=xtls-rprx-vision&security=reality&sni=$server_name&fp=chrome&pbk=$public_key&sid=$short_id&type=tcp&headerType=none#reality"
 
     # Print the server details
     echo
@@ -431,13 +434,13 @@ if /root/sing-box check -c /root/reality.json; then
     echo "UUID: $uuid"
     echo ""
     echo ""
-    echo "Here is the link for v2rayN and v2rayNG :"
+    echo "----------链接----------"
     echo ""
     echo ""
     echo "$server_link"
     echo ""
-    echo "⚠️  IMPORTANT: Please ensure you are using the LATEST version of your client."
-    echo "Older clients may fail to connect due to TLS ClientHello fingerprinting updates in sing-box."
+
+    echo "由于 sing-box 中的 TLS ClientHello 指纹更新，旧版客户端可能无法连接。"
     echo ""
 else
     echo "Error in configuration. Aborting."
