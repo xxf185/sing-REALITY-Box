@@ -66,14 +66,14 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
 			# Ask for listen port
-			read -p "Enter desired listen port (Current port is $current_listen_port): " listen_port
+			read -p "请输入端口 (Current port is $current_listen_port): " listen_port
 			listen_port=${listen_port:-$current_listen_port}
 
 			# Get current server name
 			current_server_name=$(jq -r '.inbounds[0].tls.server_name' /root/reality.json)
 
 			# Ask for server name (sni)
-			read -p "Enter server name/SNI (Current value is $current_server_name): " server_name
+			read -p "请输入 name/SNI (Current value is $current_server_name): " server_name
 			server_name=${server_name:-$current_server_name}
 
 			# Modify reality.json with new settings
