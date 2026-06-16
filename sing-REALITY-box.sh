@@ -439,10 +439,8 @@ if /root/sing-box check -c /root/reality.json; then
     echo ""
     echo "$server_link"
     echo ""
-
-    echo "由于 sing-box 中的 TLS ClientHello 指纹更新，旧版客户端可能无法连接。"
     echo ""
 else
-    echo "Error in configuration. Aborting."
+    echo "配置错误"
 fi
 
