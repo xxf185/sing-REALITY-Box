@@ -12,14 +12,15 @@ print_with_delay() {
 }
 
 # Introduction animation
-print_with_delay "sing-REALITY-box by DEATHLINE | @NamelesGhoul" 0.1
+
 echo ""
+echo "-----------sing-REALITY-box----------"
 echo ""
 
 
 # Check if jq is installed, and install it if not
 if ! command -v jq &> /dev/null; then
-    echo "jq is not installed. Installing..."
+    echo "jq安装中..."
     if [ -n "$(command -v apt)" ]; then
         apt update > /dev/null 2>&1
         apt install -y jq > /dev/null 2>&1
@@ -29,7 +30,7 @@ if ! command -v jq &> /dev/null; then
     elif [ -n "$(command -v dnf)" ]; then
         dnf install -y jq
     else
-        echo "Cannot install jq. Please install jq manually and rerun the script."
+        echo "无法安装jq"
         exit 1
     fi
 fi
@@ -37,21 +38,19 @@ fi
 # Check if reality.json, sing-box, and sing-box.service already exist
 if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.key.b64" ] && [ -f "/etc/systemd/system/sing-box.service" ]; then
 
-    echo "Reality files already exist."
+    echo "Reality已经安装"
     echo ""
-    echo "Please choose an option:"
-    echo ""
-    echo "1. Reinstall"
-    echo "2. Modify"
-    echo "3. Show Current Link"
-    echo "4. Switch Version (Stable/Alpha)"
+    echo "1. 重新安装"
+    echo "2. 修改配置"
+    echo "3. 查看配置"
+    echo "4. 切换版本 (Stable/Alpha)"
     echo "5. Uninstall"
     echo ""
-    read -p "Enter your choice (1-5): " choice
+    read -p "请选择 (1-5): " choice
 
     case $choice in
         1)
-	            	echo "Reinstalling..."
+	            	echo "重新安装..."
 	            	# Uninstall previous installation
 	            	systemctl stop sing-box
 	            	systemctl disable sing-box > /dev/null 2>&1
@@ -62,7 +61,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 	            	# Proceed with installation
 	            	;;
         2)
-            		echo "Modifying..."
+            		echo "修改配置..."
 			# Get current listen port
 			current_listen_port=$(jq -r '.inbounds[0].listen_port' /root/reality.json)
 
@@ -83,9 +82,6 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
 
 			# Restart sing-box service
 			systemctl restart sing-box
-			echo ""
-			echo ""
-			echo "New Link:"
 			echo ""
 			echo ""
 			# Get current listen port
