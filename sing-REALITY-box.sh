@@ -44,7 +44,7 @@ if [ -f "/root/reality.json" ] && [ -f "/root/sing-box" ] && [ -f "/root/public.
     echo "2. 修改配置"
     echo "3. 查看配置"
     echo "4. 切换版本 (Stable/Alpha)"
-    echo "5. Uninstall"
+    echo "5. 卸载"
     echo ""
     read -p "请选择 (1-5): " choice
 
